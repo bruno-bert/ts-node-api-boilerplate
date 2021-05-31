@@ -3,5 +3,4 @@
     "parserOptions": {
         "project": "./tsconfig.json"
     }
-
 }
