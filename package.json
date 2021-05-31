@@ -7,17 +7,22 @@
   "author": "Bruno Bertoni de Paula <bruno.bert.jj@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "start": "node dist/main/server.js",
+    "build": "rimraf dist && tsc",
+    "dev": "sucrase-node src/main/server.ts",
     "husky": "husky install",
     "lint-staged": "lint-staged",
-    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
-    "test:verbose": "jest --passWithNoTests --runInBand",
+    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand --no-cache",
+    "test:verbose": "jest --passWithNoTests --runInBand --no-cache",
     "test:unit": "yarn test --watch -c jest-unit.config.js",
     "test:integration": "yarn test --watch -c jest-integration.config.js",
     "test:staged": "yarn test --findRelatedTests",
     "test:ci": "yarn test --coverage",
-    "lint": "eslint src/**"
+    "lint": "eslint src/** --fix"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.10",
+    "@types/express": "^4.17.12",
     "@types/jest": "^26.0.23",
     "@types/node": "^15.6.1",
     "@typescript-eslint/eslint-plugin": "4",
@@ -30,7 +35,13 @@
     "husky": "^6.0.0",
     "jest": "^27.0.3",
     "lint-staged": "^11.0.0",
+    "rimraf": "^3.0.2",
+    "sucrase": "^3.18.1",
     "ts-jest": "^27.0.2",
     "typescript": "^4.3.2"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
   }
 }
