@@ -18,7 +18,7 @@
     "test:integration": "yarn test --watch -c jest-integration.config.js",
     "test:staged": "yarn test --findRelatedTests",
     "test:ci": "yarn test --coverage",
-    "test:coveralls": "yarn test:ci && coveralls < coverage/lconv.info",
+    "test:coveralls": "yarn test:ci && coveralls < coverage/lcov.info",
     "lint": "eslint src/** --fix"
   },
   "devDependencies": {
