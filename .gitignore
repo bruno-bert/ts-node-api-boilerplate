@@ -2,3 +2,6 @@ node_modules
 yarn-error.log
 dist
 coverage
+data
+!src/data
+!tests/data

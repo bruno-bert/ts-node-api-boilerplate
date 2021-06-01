@@ -1,5 +1,7 @@
+import { User } from '@/domain/user'
 describe('Controller', () => {
   test('should test jest', () => {
-    expect(1).toBe(1)
+    const user = new User()
+    expect(user).toEqual(user)
   })
 })
