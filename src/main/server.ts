@@ -1,12 +1,14 @@
 import 'module-alias/register'
 import { resolve } from 'path'
 import cors from 'cors'
+import { serve, setup } from 'swagger-ui-express'
 import express from 'express'
 import { AddressInfo } from 'net'
-
+import swaggerConfig from '@/main/docs'
 const app = express()
 
 app.use(cors())
+app.use('/docs', serve, setup(swaggerConfig))
 app.use('/static', express.static(resolve(__dirname, '../static')))
 
 app.get('/', (req, res) => res.send('Hello Test!'))
