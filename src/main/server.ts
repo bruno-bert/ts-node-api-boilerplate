@@ -11,10 +11,12 @@ app.use(cors())
 app.use('/docs', serve, setup(swaggerConfig))
 app.use('/static', express.static(resolve(__dirname, '../static')))
 
-app.get('/', (req, res) => res.send('Hello Test!'))
+app.get('/', (req, res) => {
+  res.send('Hello Test')
+})
 
 const port = process.env.PORT ?? 5000
-const server = app.listen(port as number, '0.0.0.0', () => {
+const server = app.listen(port as number, 'localhost', () => {
   const { port, address } = server.address() as AddressInfo
-  console.log('Server listening on:',`http://${address}:${port}`)
+  console.log('Server listening on',`http://${address}:${port}`)
 })

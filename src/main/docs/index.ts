@@ -19,7 +19,7 @@ export default {
     url: 'https://brunodeveloper.netlify.app'
   },
   servers: [{
-    url: '/',
+    url: '/api',
     description: 'Main Route'
   }],
   tags: [{
