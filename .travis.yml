@@ -9,3 +9,10 @@ cache:
 script:
   - eslint 'src/**'
   - yarn test:coveralls
+deploy:
+  provider: heroku
+  api_key: $HEROKU_API
+  app: ts-node-api-boilerplate
+  skip_cleanup: true 
+notifications:
+  email: false   
