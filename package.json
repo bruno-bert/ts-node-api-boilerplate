@@ -8,7 +8,8 @@
   "license": "MIT",
   "scripts": {
     "start": "node dist/main/server.js",
-    "build": "rimraf dist && tsc",
+    "build": "rimraf dist && tsc -p tsconfig-build.json",
+    "build:watch": "yarn build -w",
     "dev": "sucrase-node src/main/server.ts",
     "husky": "husky install",
     "lint-staged": "lint-staged",
