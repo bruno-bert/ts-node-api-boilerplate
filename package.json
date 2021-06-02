@@ -25,10 +25,13 @@
     "lint": "eslint src/** --fix"
   },
   "devDependencies": {
+    "@shelf/jest-mongodb": "^1.2.5",
     "@types/cors": "^2.8.10",
     "@types/express": "^4.17.12",
     "@types/jest": "^26.0.23",
+    "@types/mongodb": "^3.6.17",
     "@types/node": "^15.6.1",
+    "@types/supertest": "^2.0.11",
     "@types/swagger-ui-express": "^4.1.2",
     "@typescript-eslint/eslint-plugin": "4",
     "copyfiles": "^2.4.1",
@@ -55,6 +58,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "module-alias": "^2.2.2",
+    "mongodb": "^3.6.9",
     "swagger-ui-express": "^4.1.6"
   },
   "engines": {

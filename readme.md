@@ -3,5 +3,59 @@
 
 ## Husky 
 
-#### create hook
+#### How to Create a Hook
+```bash
+
+npx husky add .husky/{replace by git hook name} "{replace by command to be executed}"
+
+/** like this **/:
 npx husky add .husky/pre-commit "npm test"
+```
+
+## Install Mongo 4 (Ubuntu 18.04)
+
+#### Download and Installation
+```bash
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
+```
+
+```bash
+sudo add-apt-repository 'deb [arch=amd64] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.0 multiverse'
+```
+
+```bash
+sudo apt update
+sudo apt install mongodb-org
+```
+
+#### Create data directory
+```bash
+sudo mkdir -p ~/data/db
+```
+
+
+#### Starting server
+```bash
+sudo mongod --dbpath ~/data/db
+```
+#### Check if server is OK:
+```bash
+mongo --eval 'db.runCommand({ connectionStatus: 1 })'
+```
+
+__Output should be__:
+
+
+```bash
+MongoDB shell version v4.0.24
+connecting to: mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("b968a668-db33-42f3-9525-ea03925c0a4b") }
+MongoDB server version: 4.0.24
+{
+        "authInfo" : {
+                "authenticatedUsers" : [ ],
+                "authenticatedUserRoles" : [ ]
+        },
+        "ok" : 1
+}
+```
