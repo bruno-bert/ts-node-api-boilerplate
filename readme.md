@@ -59,3 +59,23 @@ MongoDB server version: 4.0.24
         "ok" : 1
 }
 ```
+
+
+## Heroku
+
+#### Logs
+```bash
+heroku logs --app=ts-node-api-boilerplate
+```
+
+#### create variables
+```bash
+heroku config:set {VARIABLE_NAME}={variable_value} --app=ts-node-api-boilerplate
+```
+
+for this app:
+```bash
+heroku config:set MONGO_URL={get this url from your mongo server provider} --app=ts-node-api-boilerplate
+heroku config:set JWT_SECRET={your token} --app=ts-node-api-boilerplate
+```
+
