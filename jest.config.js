@@ -3,7 +3,10 @@ module.exports = {
   collectCoverageFrom: [
     '<rootDir>/src/**/*.ts',
     '!<rootDir>/src/main/server.ts',
-    '!<rootDir>/src/main/docs/**/*.ts'
+    '!<rootDir>/src/main/config/apollo-server.ts',
+    '!<rootDir>/src/main/docs/**/*.ts',
+    '!<rootDir>/src/**/index.ts',
+    '!**/*.d.ts'
   ],
   coverageDirectory: 'coverage',
   preset: '@shelf/jest-mongodb',
