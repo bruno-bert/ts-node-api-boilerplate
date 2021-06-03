@@ -30,6 +30,8 @@ export default (app: Express): void => {
     resolvers,
     typeDefs,
     schemaDirectives,
+    introspection: true,
+    playground: true,
     context: ({ req }) => ({ req }),
     plugins: [{
       requestDidStart: () => ({

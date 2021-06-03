@@ -79,3 +79,7 @@ heroku config:set MONGO_URL={get this url from your mongo server provider} --app
 heroku config:set JWT_SECRET={your token} --app=ts-node-api-boilerplate
 ```
 
+#### restart dyno
+```bash
+heroku restart --app=ts-node-api-boilerplate
+```
