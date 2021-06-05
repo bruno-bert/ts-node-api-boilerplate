@@ -2,26 +2,20 @@ import {
   accountSchema,
   loginParamsSchema,
   errorSchema,
-  surveyAnswerSchema,
-  surveysSchema,
-  surveySchema,
+  chatsSchema,
+  chatSchema,
   signUpParamsSchema,
-  addSurveyParamsSchema,
-  saveSurveyParamsSchema,
-  surveyResultSchema,
-  surveyResultAnswerSchema
+  addChatParamsSchema,
+  saveChatParamsSchema
 } from './schemas/'
 
 export default {
   account: accountSchema,
   loginParams: loginParamsSchema,
   signUpParams: signUpParamsSchema,
-  addSurveyParams: addSurveyParamsSchema,
+  addChatParams: addChatParamsSchema,
   error: errorSchema,
-  surveys: surveysSchema,
-  survey: surveySchema,
-  surveyAnswer: surveyAnswerSchema,
-  saveSurveyParams: saveSurveyParamsSchema,
-  surveyResult: surveyResultSchema,
-  surveyResultAnswer: surveyResultAnswerSchema
+  chats: chatsSchema,
+  chat: chatSchema,
+  saveChatParams: saveChatParamsSchema
 }
