@@ -17,12 +17,12 @@ const mockChat = (): Omit<ChatModel,'id'> => ({
   date: new Date()
 })
 
-const mockAccessToken = async (): Promise<string> => {
+const mockAccessToken = async (role: string = undefined): Promise<string> => {
   const res = await accountCollection.insertOne({
     name: 'Rodrigo',
     email: 'rodrigo.manguinho@gmail.com',
     password: '123',
-    role: 'admin'
+    role
   })
   const id = res.ops[0]._id
   const accessToken = sign({ id }, env.jwtSecret)

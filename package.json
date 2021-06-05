@@ -23,6 +23,7 @@
     "test:integration:verbose": "yarn test:verbose --watch -c jest-integration.config.js",
     "test:staged": "yarn test --findRelatedTests",
     "test:ci": "yarn test --coverage",
+    "test:clear": "jest --clearCache",
     "test:coveralls": "yarn test:ci && coveralls < coverage/lcov.info",
     "lint": "eslint src/** --fix"
   },
