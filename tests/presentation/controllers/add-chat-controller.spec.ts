@@ -1,5 +1,5 @@
 import { AddChatController } from '@/presentation/controllers'
-import { badRequest, serverError, noContent } from '@/presentation/helpers'
+import { badRequest, serverError, ok, objectWithoutProperty } from '@/presentation/helpers'
 import { ValidationSpy, AddChatSpy } from '@/tests/presentation/mocks'
 import { throwError } from '@/tests/domain/mocks'
 
@@ -66,9 +66,11 @@ describe('AddChat Controller', () => {
     expect(httpResponse).toEqual(serverError(new Error()))
   })
 
-  test('Should return 204 on success', async () => {
+  test('Should return 200 on success', async () => {
     const { sut } = makeSut()
-    const httpResponse = await sut.handle(mockRequest())
-    expect(httpResponse).toEqual(noContent())
+    const request = mockRequest()
+    const httpResponse = await sut.handle(request)
+    const bodyToCompare = objectWithoutProperty(httpResponse.body, ['date'])
+    expect({ ...httpResponse, body: bodyToCompare }).toEqual(ok(request))
   })
 })

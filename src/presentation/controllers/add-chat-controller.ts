@@ -1,5 +1,5 @@
 import { Controller, HttpResponse, Validation } from '@/presentation/protocols'
-import { badRequest, serverError, noContent } from '@/presentation/helpers'
+import { badRequest, serverError, ok } from '@/presentation/helpers'
 import { AddChat } from '@/domain/usecases'
 
 export class AddChatController implements Controller {
@@ -14,11 +14,13 @@ export class AddChatController implements Controller {
       if (error) {
         return badRequest(error)
       }
-      await this.addChat.add({
+      const chat = {
         ...request,
         date: new Date()
-      })
-      return noContent()
+      }
+
+      await this.addChat.add(chat)
+      return ok(chat)
     } catch (error) {
       return serverError(error)
     }

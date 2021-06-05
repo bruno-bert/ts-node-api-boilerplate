@@ -1,6 +1,7 @@
 import app from '@/main/config/app'
 import env from '@/main/config/env'
 import { MongoHelper } from '@/infra/db'
+import faker from 'faker'
 
 import { sign } from 'jsonwebtoken'
 import { Collection } from 'mongodb'
@@ -10,14 +11,13 @@ import { ChatModel } from '@/domain/models'
 let chatCollection: Collection
 let accountCollection: Collection
 
-const mockChat = (): Omit<ChatModel,'id'> => ({
+const mockChat = (accountId: string = faker.random.word()): Omit<ChatModel,'id' | 'date'> => ({
   name: 'John',
   welcomeMessage: 'Hello Chat',
-  accountId: 'any_account',
-  date: new Date()
+  accountId: accountId
 })
 
-const mockAccessToken = async (role: string = undefined): Promise<string> => {
+const mockAccessToken = async (role: string = undefined): Promise<{accessToken: string, accountId: string}> => {
   const res = await accountCollection.insertOne({
     name: 'Rodrigo',
     email: 'rodrigo.manguinho@gmail.com',
@@ -33,7 +33,7 @@ const mockAccessToken = async (role: string = undefined): Promise<string> => {
       accessToken
     }
   })
-  return accessToken
+  return { accessToken, accountId: id }
 }
 
 describe('Chat Routes', () => {
@@ -60,13 +60,14 @@ describe('Chat Routes', () => {
         .expect(403)
     })
 
-    test('Should return 204 on add chat with valid accessToken', async () => {
-      const accessToken = await mockAccessToken()
+    test('Should return 200 on add chat with valid accessToken', async () => {
+      const { accessToken, accountId } = await mockAccessToken()
+      const chat = mockChat(accountId)
       await request(app)
         .post('/api/chats')
         .set('x-access-token', accessToken)
-        .send(mockChat())
-        .expect(204)
+        .send(chat)
+        .expect(200)
     })
   })
 
@@ -78,7 +79,7 @@ describe('Chat Routes', () => {
     })
 
     test('Should return 204 on load chats with valid accessToken', async () => {
-      const accessToken = await mockAccessToken()
+      const { accessToken } = await mockAccessToken()
       await request(app)
         .get('/api/chats')
         .set('x-access-token', accessToken)

@@ -3,8 +3,8 @@ export const chatPath = {
     security: [{
       apiKeyAuth: []
     }],
-    tags: ['Enquete'],
-    summary: 'API para listar todas as enquetes',
+    tags: ['Chat'],
+    summary: 'API para listar todos os chats',
     description: 'Essa rota só pode ser executada por **usuários autenticados**',
     responses: {
       200: {
@@ -35,7 +35,7 @@ export const chatPath = {
     security: [{
       apiKeyAuth: []
     }],
-    tags: ['Enquete'],
+    tags: ['Chat'],
     summary: 'API para criar um chat',
     description: 'Essa rota só pode ser executada por **usuários autenticados**',
     requestBody: {
@@ -49,8 +49,8 @@ export const chatPath = {
       }
     },
     responses: {
-      204: {
-        description: 'Sucesso, mas sem dados para exibir'
+      200: {
+        $ref: '#/components/ok'
       },
       403: {
         $ref: '#/components/forbidden'

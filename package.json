@@ -10,6 +10,7 @@
     "start": "node dist/main/server.js",
     "build": "rimraf dist && tsc -p tsconfig-build.json",
     "build:watch": "yarn build -w",
+    "go": "yarn build && yarn start",
     "postbuild": "copyfiles -u 1 public/**/* dist/static",
     "dev": "ts-node-dev --respawn --transpile-only --watch src/**/*.ts --ignore-watch node_modules --no-notify src/main/server.ts",
     "debug": "nodemon -L --watch ./dist --inspect=0.0.0.0:9222 --nolazy ./dist/main/server.js",

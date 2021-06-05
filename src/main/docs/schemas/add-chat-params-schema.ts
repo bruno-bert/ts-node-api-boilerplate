@@ -6,10 +6,7 @@ export const addChatParamsSchema = {
     },
     name: {
       type: 'string'
-    },
-    accountId: {
-      type: 'string'
     }
   },
-  required: ['welcomeMessage', 'accountId', 'name']
+  required: ['welcomeMessage','name']
 }
