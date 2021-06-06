@@ -1,5 +1,5 @@
-import { AddChat, LoadChats, CheckChatById } from '@/domain/usecases'
-import { mockChatModels } from '@/tests/domain/mocks'
+import { AddChat, LoadChats, CheckChatById, LoadChatById } from '@/domain/usecases'
+import { mockChatModel, mockChatModels } from '@/tests/domain/mocks'
 
 export class AddChatSpy implements AddChat {
   params: AddChat.Params
@@ -21,9 +21,23 @@ export class LoadChatsSpy implements LoadChats {
 
 export class CheckChatByIdSpy implements CheckChatById {
   id: string
+  accountId: string
   result = true
 
-  async checkById (id: string): Promise<CheckChatById.Result> {
+  async checkById (accountId: string, id: string): Promise<CheckChatById.Result> {
+    this.id = id
+    this.accountId = accountId
+    return this.result
+  }
+}
+
+export class LoadChatByIdSpy implements LoadChatById {
+  id: string
+  accountId: string
+  result = mockChatModel()
+
+  async loadById (accountId: string, id: string): Promise<LoadChatById.Result> {
+    this.accountId = accountId
     this.id = id
     return this.result
   }

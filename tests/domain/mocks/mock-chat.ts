@@ -3,13 +3,13 @@ import { AddChat } from '@/domain/usecases'
 
 import faker from 'faker'
 
-export const mockChatModel = (): ChatModel => {
+export const mockChatModel = (accountId: string = faker.random.words()): ChatModel => {
   return {
     id: faker.datatype.uuid(),
     name: faker.random.words(),
     welcomeMessage: faker.random.words(),
     date: faker.date.recent(),
-    accountId: faker.random.words()
+    accountId
   }
 }
 

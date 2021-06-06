@@ -8,6 +8,9 @@ type SutTypes = {
   sut: DbCheckChatById
   checkChatByIdRepositorySpy: CheckChatByIdRepositorySpy
 }
+const mockAccountId = (): string => {
+  return faker.datatype.uuid()
+}
 
 const makeSut = (): SutTypes => {
   const checkChatByIdRepositorySpy = new CheckChatByIdRepositorySpy()
@@ -27,27 +30,27 @@ describe('DbLoadChatById', () => {
 
   test('Should call CheckChatByIdRepository', async () => {
     const { sut, checkChatByIdRepositorySpy } = makeSut()
-    await sut.checkById(ChatId)
+    await sut.checkById(mockAccountId(),ChatId)
     expect(checkChatByIdRepositorySpy.id).toBe(ChatId)
   })
 
   test('Should return true if CheckChatByIdRepository returns true', async () => {
     const { sut } = makeSut()
-    const exists = await sut.checkById(ChatId)
+    const exists = await sut.checkById(mockAccountId(),ChatId)
     expect(exists).toBe(true)
   })
 
   test('Should return false if CheckChatByIdRepository returns false', async () => {
     const { sut, checkChatByIdRepositorySpy } = makeSut()
     checkChatByIdRepositorySpy.result = false
-    const exists = await sut.checkById(ChatId)
+    const exists = await sut.checkById(mockAccountId(),ChatId)
     expect(exists).toBe(false)
   })
 
   test('Should throw if CheckChatByIdRepository throws', async () => {
     const { sut, checkChatByIdRepositorySpy } = makeSut()
     jest.spyOn(checkChatByIdRepositorySpy, 'checkById').mockImplementationOnce(throwError)
-    const promise = sut.checkById(ChatId)
+    const promise = sut.checkById(mockAccountId(),ChatId)
     await expect(promise).rejects.toThrow()
   })
 })

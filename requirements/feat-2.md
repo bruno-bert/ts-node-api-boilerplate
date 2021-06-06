@@ -9,3 +9,5 @@
 
 1. ✅ Returns error **404** when API does not exist or chat does not exist
 2. ✅ Returns error **403** when user does not have valid token
+3. ✅ Returns error **500** when there is unexpected error on server
+4. ✅ Returns error **400** when chat id is not valid

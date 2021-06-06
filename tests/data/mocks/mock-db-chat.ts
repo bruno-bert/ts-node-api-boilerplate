@@ -10,20 +10,24 @@ export class AddChatRepositorySpy implements AddChatRepository {
 }
 
 export class LoadChatByIdRepositorySpy implements LoadChatByIdRepository {
+  accountId: string
   id: string
   result = mockChatModel()
 
-  async loadById (id: string): Promise<LoadChatByIdRepository.Result> {
+  async loadById (accountId: string, id: string): Promise<LoadChatByIdRepository.Result> {
+    this.accountId = accountId
     this.id = id
     return this.result
   }
 }
 
 export class CheckChatByIdRepositorySpy implements CheckChatByIdRepository {
+  accountId: string
   id: string
   result = true
 
-  async checkById (id: string): Promise<CheckChatByIdRepository.Result> {
+  async checkById (accountId: string, id: string): Promise<CheckChatByIdRepository.Result> {
+    this.accountId = accountId
     this.id = id
     return this.result
   }

@@ -1,5 +1,5 @@
 export interface CheckChatByIdRepository {
-  checkById: (id: string) => Promise<CheckChatByIdRepository.Result>
+  checkById: (accountId: string, id: string) => Promise<CheckChatByIdRepository.Result>
 }
 
 export namespace CheckChatByIdRepository {

@@ -27,15 +27,19 @@ export class ChatMongoRepository implements AddChatRepository, LoadChatsReposito
     return MongoHelper.mapCollection(Chats)
   }
 
-  async loadById (id: string): Promise<LoadChatByIdRepository.Result> {
+  async loadById (accountId: string, id: string): Promise<LoadChatByIdRepository.Result> {
     const ChatCollection = await MongoHelper.getCollection('chats')
-    const Chat = await ChatCollection.findOne({ _id: new ObjectId(id) })
+    const Chat = await ChatCollection.findOne({
+      accountId,
+      _id: new ObjectId(id)
+    })
     return Chat && MongoHelper.map(Chat)
   }
 
-  async checkById (id: string): Promise<CheckChatByIdRepository.Result> {
+  async checkById (accountId: string, id: string): Promise<CheckChatByIdRepository.Result> {
     const ChatCollection = await MongoHelper.getCollection('chats')
     const Chat = await ChatCollection.findOne({
+      accountId, // new ObjectId(accountId),
       _id: new ObjectId(id)
     }, {
       projection: {

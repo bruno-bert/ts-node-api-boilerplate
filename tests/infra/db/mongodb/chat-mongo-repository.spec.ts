@@ -75,29 +75,32 @@ describe('ChatMongoRepository', () => {
     test('Should load Chat by id on success', async () => {
       const res = await chatCollection.insertOne(mockAddChatParams())
       const sut = makeSut()
-      const Chat = await sut.loadById(res.ops[0]._id)
+      const Chat = await sut.loadById(res.ops[0].accountId, res.ops[0]._id)
       expect(Chat).toBeTruthy()
       expect(Chat.id).toBeTruthy()
     })
 
     test('Should return null if Chat does not exists', async () => {
+      const accountId = await mockAccountId()
       const sut = makeSut()
-      const Chat = await sut.loadById(makeObjectId())
+      const Chat = await sut.loadById(accountId, makeObjectId())
       expect(Chat).toBeFalsy()
     })
   })
 
   describe('checkById()', () => {
     test('Should return true if Chat exists', async () => {
-      const res = await chatCollection.insertOne(mockAddChatParams())
+      const accountId = await mockAccountId()
+      const res = await chatCollection.insertOne(mockAddChatParams(accountId))
       const sut = makeSut()
-      const exists = await sut.checkById(res.ops[0]._id)
+      const exists = await sut.checkById(accountId, res.ops[0]._id)
       expect(exists).toBe(true)
     })
 
     test('Should return false if Chat exists', async () => {
+      const accountId = await mockAccountId()
       const sut = makeSut()
-      const exists = await sut.checkById(makeObjectId())
+      const exists = await sut.checkById(accountId, makeObjectId())
       expect(exists).toBe(false)
     })
   })

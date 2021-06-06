@@ -1,7 +1,7 @@
 import { ChatModel } from '@/domain/models'
 
 export interface LoadChatByIdRepository {
-  loadById: (id: string) => Promise<LoadChatByIdRepository.Result>
+  loadById: (accountId: string, id: string) => Promise<LoadChatByIdRepository.Result>
 }
 
 export namespace LoadChatByIdRepository {

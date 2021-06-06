@@ -7,9 +7,15 @@ import { sign } from 'jsonwebtoken'
 import { Collection } from 'mongodb'
 import request from 'supertest'
 import { ChatModel } from '@/domain/models'
+import { mockChatModel } from '@/tests/domain/mocks'
+import FakeObjectId from 'bson-objectid'
 
 let chatCollection: Collection
 let accountCollection: Collection
+
+const makeObjectId = (): string => {
+  return new FakeObjectId().toHexString()
+}
 
 const mockChat = (accountId: string = faker.random.word()): Omit<ChatModel,'id' | 'date'> => ({
   name: 'John',
@@ -19,8 +25,8 @@ const mockChat = (accountId: string = faker.random.word()): Omit<ChatModel,'id' 
 
 const mockAccessToken = async (role: string = undefined): Promise<{accessToken: string, accountId: string}> => {
   const res = await accountCollection.insertOne({
-    name: 'Rodrigo',
-    email: 'rodrigo.manguinho@gmail.com',
+    name: 'Bruno',
+    email: 'bruno.bert@gmail.com',
     password: '123',
     role
   })
@@ -84,6 +90,42 @@ describe('Chat Routes', () => {
         .get('/api/chats')
         .set('x-access-token', accessToken)
         .expect(204)
+    })
+  })
+
+  describe('GET /chats/:chatId', () => {
+    test('Should return 403 on load chat details without accessToken', async () => {
+      await request(app)
+        .get('/api/chats/any_chat_id')
+        .expect(403)
+    })
+
+    test('Should return 404 on load chat details with valid token that does not exist', async () => {
+      const { accessToken } = await mockAccessToken()
+      const fakeId = makeObjectId()
+      await request(app)
+        .get(`/api/chats/${fakeId}`)
+        .set('x-access-token', accessToken)
+        .expect(404)
+    })
+
+    test('Should return 400 on load chat details with valid token by invalid id', async () => {
+      const { accessToken } = await mockAccessToken()
+      const fakeId = 'invalid_id'
+      await request(app)
+        .get(`/api/chats/${fakeId}`)
+        .set('x-access-token', accessToken)
+        .expect(400)
+    })
+
+    test('Should return 200 on load existing chat with valid accessToken', async () => {
+      const { accessToken, accountId } = await mockAccessToken()
+      const res = await chatCollection.insertOne(mockChatModel(accountId))
+      const id = res.ops[0]._id
+      await request(app)
+        .get(`/api/chats/${id}`)
+        .set('x-access-token', accessToken)
+        .expect(200)
     })
   })
 })
