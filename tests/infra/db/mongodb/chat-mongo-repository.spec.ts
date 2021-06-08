@@ -1,5 +1,5 @@
 import { ChatMongoRepository, MongoHelper } from '@/infra/db'
-import { mockAddChatParams, mockAddAccountParams } from '@/tests/domain/mocks'
+import { mockAddChatParams, mockAddAccountParams, mockUpdateChatParams } from '@/tests/domain/mocks'
 
 import { Collection } from 'mongodb'
 import FakeObjectId from 'bson-objectid'
@@ -102,6 +102,27 @@ describe('ChatMongoRepository', () => {
       const sut = makeSut()
       const exists = await sut.checkById(accountId, makeObjectId())
       expect(exists).toBe(false)
+    })
+  })
+
+  describe('updateById()', () => {
+    test('Should return data if Chat exists', async () => {
+      const accountId = await mockAccountId()
+      const chat = mockAddChatParams(accountId)
+      const res = await chatCollection.insertOne(chat)
+      const sut = makeSut()
+      const data = mockUpdateChatParams()
+      const result = await sut.updateById(accountId, res.ops[0]._id, data)
+      expect(result.welcomeMessage).toBe(data.welcomeMessage)
+      expect(result.name).toBe(data.name)
+    })
+
+    test('Should return null if Chat does not exists', async () => {
+      const accountId = await mockAccountId()
+      const sut = makeSut()
+      const data = mockUpdateChatParams()
+      const result = await sut.updateById(accountId, makeObjectId(), data)
+      expect(result).toBe(null)
     })
   })
 })

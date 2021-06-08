@@ -13,8 +13,8 @@ export class LoadChatDetailController implements Controller {
         return badRequest(error)
       }
 
-      const { accountId, chatId } = request
-      const chat = await this.loadChatById.loadById(accountId, chatId)
+      const { accountId, id } = request
+      const chat = await this.loadChatById.loadById(accountId, id)
       return chat ? ok(chat) : notFound()
     } catch (error) {
       return serverError(error)
@@ -25,6 +25,6 @@ export class LoadChatDetailController implements Controller {
 export namespace LoadChatDetailController {
   export type Request = {
     accountId: string
-    chatId: string
+    id: string
   }
 }

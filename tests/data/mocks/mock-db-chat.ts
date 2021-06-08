@@ -1,4 +1,5 @@
-import { AddChatRepository, LoadChatByIdRepository, LoadChatsRepository, CheckChatByIdRepository } from '@/data/protocols'
+import { AddChatRepository, LoadChatByIdRepository, LoadChatsRepository, CheckChatByIdRepository, UpdateChatByIdRepository } from '@/data/protocols'
+import { UpdateChatModel } from '@/domain/usecases'
 import { mockChatModel, mockChatModels } from '@/tests/domain/mocks'
 
 export class AddChatRepositorySpy implements AddChatRepository {
@@ -39,6 +40,20 @@ export class LoadChatsRepositorySpy implements LoadChatsRepository {
 
   async loadAll (accountId: string): Promise<LoadChatsRepository.Result> {
     this.accountId = accountId
+    return this.result
+  }
+}
+
+export class UpdateChatByIdRepositorySpy implements UpdateChatByIdRepository {
+  accountId: string
+  id: string
+  data: UpdateChatModel
+  result = mockChatModel()
+
+  async updateById (accountId: string, id: string, data: UpdateChatModel): Promise<UpdateChatByIdRepository.Result> {
+    this.accountId = accountId
+    this.id = id
+    this.data = data
     return this.result
   }
 }

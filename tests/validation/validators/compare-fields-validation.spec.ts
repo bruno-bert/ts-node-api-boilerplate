@@ -3,7 +3,7 @@ import { InvalidParamError } from '@/presentation/errors'
 
 import faker from 'faker'
 
-const field = faker.random.word()
+const field = faker.random.words()
 const fieldToCompare = faker.random.word()
 
 const makeSut = (): CompareFieldsValidation => {

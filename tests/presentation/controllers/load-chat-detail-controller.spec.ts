@@ -7,7 +7,7 @@ import MockDate from 'mockdate'
 import faker from 'faker'
 import { InvalidParamError } from '@/presentation/errors'
 
-const mockRequest = (): LoadChatDetailController.Request => ({ accountId: faker.datatype.uuid(), chatId: '123' })
+const mockRequest = (): LoadChatDetailController.Request => ({ accountId: faker.datatype.uuid(), id: '123' })
 
 type SutTypes = {
   sut: LoadChatDetailController
@@ -42,7 +42,7 @@ describe('LoadChatDetail Controller', () => {
     const request = mockRequest()
     const loadByIdSpy = jest.spyOn(loadChatByIdSpy,'loadById')
     await sut.handle(request)
-    expect(loadByIdSpy).toHaveBeenCalledWith(request.accountId,request.chatId)
+    expect(loadByIdSpy).toHaveBeenCalledWith(request.accountId,request.id)
   })
 
   test('Should return 200 on success', async () => {
