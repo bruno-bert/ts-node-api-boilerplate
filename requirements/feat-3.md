@@ -1,10 +1,10 @@
-# add steps on chat
+# Update one chat
 
 > ## Sucess
 
-1. ✅ Sends a request of type **PUT** on route **/api/chats/:id**
-2. ✅ Validates required fields to put request (**name**,**trigger**,**message** )
-2. ✅ Returns **200** with related step information
+1. ✅ Receives a request of type **PUT** on route **/api/chats/:id**
+2. ✅ Validates required information **welcomeMessage**
+3. ✅ Returns **200** and information of the related body
 
 > ## Exceptions
 

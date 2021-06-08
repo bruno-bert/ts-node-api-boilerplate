@@ -20,14 +20,14 @@ export default {
   },
   servers: [{
     url: '/api',
-    description: 'Servidor Principal'
+    description: 'Main Route'
   }],
   tags: [{
     name: 'Login',
-    description: 'APIs relacionadas a Login'
+    description: 'APIs related to Login'
   }, {
     name: 'Chat',
-    description: 'APIs relacionadas a Chat'
+    description: 'APIs related to Chat'
   }],
   paths,
   schemas,

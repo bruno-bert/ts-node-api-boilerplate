@@ -1,6 +1,5 @@
 import { MongoHelper, QueryBuilder } from '@/infra/db'
-import { AddChatRepository, LoadChatsRepository, LoadChatByIdRepository, CheckChatByIdRepository } from '@/data/protocols/db'
-
+import { AddChatRepository, LoadChatsRepository, LoadChatByIdRepository, CheckChatByIdRepository, UpdateChatByIdRepository } from '@/data/protocols/db'
 import { ObjectId } from 'mongodb'
 
 export class ChatMongoRepository implements AddChatRepository, LoadChatsRepository, LoadChatByIdRepository, CheckChatByIdRepository {
@@ -34,6 +33,26 @@ export class ChatMongoRepository implements AddChatRepository, LoadChatsReposito
       _id: new ObjectId(id)
     })
     return Chat && MongoHelper.map(Chat)
+  }
+
+  async updateById (accountId: string, id: string, data: UpdateChatByIdRepository.Params): Promise<LoadChatByIdRepository.Result> {
+    const ChatCollection = await MongoHelper.getCollection('chats')
+
+    const query = {
+      accountId,
+      _id: new ObjectId(id)
+    }
+
+    const update = {
+      $set: data
+    }
+
+    const Chat = await ChatCollection.findOneAndUpdate(query , update, { returnDocument: 'after' })
+    if (Chat.value) {
+      return MongoHelper.map(Chat.value)
+    } else {
+      return null
+    }
   }
 
   async checkById (accountId: string, id: string): Promise<CheckChatByIdRepository.Result> {

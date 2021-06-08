@@ -1,24 +1,27 @@
-export const chatPath = {
+export const chatByIdPath = {
+
   get: {
     security: [{
       apiKeyAuth: []
     }],
     tags: ['Chat'],
-    summary: 'API to list all chats',
+    summary: 'API to get a chat',
     description: 'This route can only be executed by **authenticated users**',
+    parameters: [{
+      in: 'path',
+      name: 'id',
+      description: 'Chat ID to be returned',
+      required: true,
+      schema: {
+        type: 'string'
+      }
+    }],
     responses: {
-      200: {
-        description: 'Success',
-        content: {
-          'application/json': {
-            schema: {
-              $ref: '#/schemas/chats'
-            }
-          }
-        }
+      400: {
+        $ref: '#/components/badRequest'
       },
-      204: {
-        description: 'Success, but not content to show'
+      200: {
+        $ref: '#/components/ok'
       },
       403: {
         $ref: '#/components/forbidden'
@@ -31,19 +34,29 @@ export const chatPath = {
       }
     }
   },
-  post: {
+
+  put: {
     security: [{
       apiKeyAuth: []
     }],
     tags: ['Chat'],
-    summary: 'API to create a new chat',
+    summary: 'API to update a chat',
     description: 'This route can only be executed by **authenticated users**',
+    parameters: [{
+      in: 'path',
+      name: 'id',
+      description: 'Chat ID to be updated',
+      required: true,
+      schema: {
+        type: 'string'
+      }
+    }],
     requestBody: {
       required: true,
       content: {
         'application/json': {
           schema: {
-            $ref: '#/schemas/addChatParams'
+            $ref: '#/schemas/updateChatParams'
           }
         }
       }

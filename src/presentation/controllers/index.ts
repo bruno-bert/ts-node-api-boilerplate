@@ -1,5 +1,6 @@
 export * from './add-chat-controller'
 export * from './load-chats-controller'
 export * from './load-chat-detail-controller'
+export * from './update-chat-controller'
 export * from './login-controller'
 export * from './signup-controller'

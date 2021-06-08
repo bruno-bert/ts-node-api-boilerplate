@@ -6,6 +6,7 @@ import {
   chatSchema,
   signUpParamsSchema,
   addChatParamsSchema,
+  updateChatParamsSchema,
   saveChatParamsSchema
 } from './schemas/'
 
@@ -14,6 +15,7 @@ export default {
   loginParams: loginParamsSchema,
   signUpParams: signUpParamsSchema,
   addChatParams: addChatParamsSchema,
+  updateChatParams: updateChatParamsSchema,
   error: errorSchema,
   chats: chatsSchema,
   chat: chatSchema,

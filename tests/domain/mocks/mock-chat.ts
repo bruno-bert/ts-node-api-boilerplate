@@ -1,5 +1,5 @@
 import { ChatModel } from '@/domain/models'
-import { AddChat } from '@/domain/usecases'
+import { AddChat, UpdateChat } from '@/domain/usecases'
 
 import faker from 'faker'
 
@@ -23,4 +23,10 @@ export const mockAddChatParams = (accountId: string = faker.datatype.uuid()): Ad
   name: faker.random.words(),
   date: faker.date.recent(),
   accountId: accountId
+})
+
+export const mockUpdateChatParams = (): UpdateChat.Params => ({
+  welcomeMessage: faker.random.words(),
+  name: faker.random.words(),
+  date: new Date()
 })
