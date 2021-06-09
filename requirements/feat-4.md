@@ -1,6 +1,6 @@
 # add step to chat
 
-> ## Sucess
+> ## Sucesss
 
 1.  Sends a request of type **POST** on route **/api/chats/:id/step**
 2.  Validates required fields to put request (**name**,**message**,**trigger**,**end** )

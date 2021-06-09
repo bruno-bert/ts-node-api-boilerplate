@@ -14,13 +14,17 @@ export class AddChatController implements Controller {
       if (error) {
         return badRequest(error)
       }
+
+      const { welcomeMessage, name, accountId } = request
       const chat = {
-        ...request,
+        name,
+        welcomeMessage,
+        accountId,
         date: new Date()
       }
+      const result = await this.addChat.add(chat)
 
-      await this.addChat.add(chat)
-      return ok(chat)
+      return ok(result)
     } catch (error) {
       return serverError(error)
     }

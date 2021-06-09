@@ -25,6 +25,13 @@ export const mockAddChatParams = (accountId: string = faker.datatype.uuid()): Ad
   accountId: accountId
 })
 
+export const mockAddChatResult = (accountId: string = faker.datatype.uuid()): AddChat.Result => ({
+  welcomeMessage: faker.random.words(),
+  name: faker.random.words(),
+  date: faker.date.recent(),
+  accountId: accountId
+})
+
 export const mockUpdateChatParams = (): UpdateChat.Params => ({
   welcomeMessage: faker.random.words(),
   name: faker.random.words(),

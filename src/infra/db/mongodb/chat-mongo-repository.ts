@@ -1,11 +1,18 @@
 import { MongoHelper, QueryBuilder } from '@/infra/db'
 import { AddChatRepository, LoadChatsRepository, LoadChatByIdRepository, CheckChatByIdRepository, UpdateChatByIdRepository } from '@/data/protocols/db'
 import { ObjectId } from 'mongodb'
+import { ChatModel } from '@/domain/models'
 
-export class ChatMongoRepository implements AddChatRepository, LoadChatsRepository, LoadChatByIdRepository, CheckChatByIdRepository {
-  async add (data: AddChatRepository.Params): Promise<void> {
+export class ChatMongoRepository implements AddChatRepository, LoadChatsRepository, LoadChatByIdRepository, CheckChatByIdRepository, UpdateChatByIdRepository {
+  async add (data: AddChatRepository.Params): Promise<ChatModel> {
     const ChatCollection = await MongoHelper.getCollection('chats')
-    await ChatCollection.insertOne(data)
+    const document = await ChatCollection.insertOne(data)
+
+    if (document.ops) {
+      return MongoHelper.map(document.ops[0])
+    } else {
+      return null
+    }
   }
 
   async loadAll (accountId: string): Promise<LoadChatsRepository.Result> {
@@ -43,13 +50,11 @@ export class ChatMongoRepository implements AddChatRepository, LoadChatsReposito
       _id: new ObjectId(id)
     }
 
-    const update = {
-      $set: data
-    }
+    const update = { $set: data }
 
-    const Chat = await ChatCollection.findOneAndUpdate(query , update, { returnDocument: 'after' })
-    if (Chat.value) {
-      return MongoHelper.map(Chat.value)
+    const document = await ChatCollection.findOneAndUpdate(query , update, { returnDocument: 'after' })
+    if (document.value) {
+      return MongoHelper.map(document.value)
     } else {
       return null
     }

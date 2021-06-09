@@ -1,6 +1,6 @@
 import { Controller, HttpResponse, Validation } from '@/presentation/protocols'
 import { serverError, notFound, ok, badRequest } from '@/presentation/helpers'
-import { CheckChatById, UpdateChatById, UpdateChatModel } from '@/domain/usecases'
+import { CheckChatById, UpdateChatById } from '@/domain/usecases'
 
 export class UpdateChatController implements Controller {
   constructor (private readonly checkChatById: CheckChatById,
@@ -19,8 +19,10 @@ export class UpdateChatController implements Controller {
       const chat = await this.checkChatById.checkById(accountId, id)
       if (!chat) { return notFound() }
 
-      const data: UpdateChatModel = {
-        ...request,
+      const { welcomeMessage, name } = request
+      const data = {
+        name,
+        welcomeMessage,
         date: new Date()
       }
 

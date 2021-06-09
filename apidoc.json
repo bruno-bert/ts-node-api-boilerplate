@@ -1,0 +1,7 @@
+{
+    "name": "ts-node-api-boilerplate",
+    "version": "1.0.0",
+    "description": "Typescript Node API Boilerplate",
+    "title": "EasyChat API",
+    "url" : "https://localhost:5050/api"
+  }

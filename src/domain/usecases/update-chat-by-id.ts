@@ -1,11 +1,7 @@
 import { ChatModel } from '../models'
 
 export interface UpdateChatById {
-  updateById: (accountId: string, id: string, data: UpdateChat.Params) => Promise<UpdateChatById.Result>
-}
-
-export namespace UpdateChatById {
-  export type Result = ChatModel
+  updateById: (accountId: string, id: string, data: UpdateChat.Params) => Promise<UpdateChat.Result>
 }
 
 export type UpdateChatModel = {
@@ -16,4 +12,5 @@ export type UpdateChatModel = {
 
 export namespace UpdateChat {
   export type Params = UpdateChatModel
+  export type Result = ChatModel
 }

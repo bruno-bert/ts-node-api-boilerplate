@@ -5,8 +5,9 @@ import { mockChatModel, mockChatModels } from '@/tests/domain/mocks'
 export class AddChatRepositorySpy implements AddChatRepository {
   params: AddChatRepository.Params
 
-  async add (params: AddChatRepository.Params): Promise<void> {
+  async add (params: AddChatRepository.Params): Promise<AddChatRepository.Result> {
     this.params = params
+    return null
   }
 }
 

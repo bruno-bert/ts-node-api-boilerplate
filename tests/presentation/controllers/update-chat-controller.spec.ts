@@ -55,7 +55,9 @@ describe('UpdateChatController', () => {
     const request = mockRequest()
     const updateByIdSpy = jest.spyOn(updateChatByIdSpy,'updateById')
     await sut.handle(request)
-    expect(updateByIdSpy).toHaveBeenCalledWith(request.accountId,request.id, request)
+    const { name, welcomeMessage } = request
+    const objectToCompare = { welcomeMessage, name, date: new Date() }
+    expect(updateByIdSpy).toHaveBeenCalledWith(request.accountId,request.id, objectToCompare)
   })
 
   test('Should return 200 on success', async () => {

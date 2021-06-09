@@ -16,6 +16,7 @@ export const chatByIdPath = {
         type: 'string'
       }
     }],
+
     responses: {
       400: {
         $ref: '#/components/badRequest'

@@ -6,11 +6,11 @@ import faker from 'faker'
 import { sign } from 'jsonwebtoken'
 import { Collection } from 'mongodb'
 import request from 'supertest'
-import { ChatModel } from '@/domain/models'
 import { mockChatModel } from '@/tests/domain/mocks'
 import FakeObjectId from 'bson-objectid'
 
 import MockDate from 'mockdate'
+import { ChatModel } from '@/domain/models'
 
 let chatCollection: Collection
 let accountCollection: Collection
@@ -20,16 +20,11 @@ const makeObjectId = (): string => {
   return new FakeObjectId().toHexString()
 }
 
-const mockChat = (accountId: string = faker.random.word()): Omit<ChatModel,'id' | 'date'> => ({
-  name: 'John',
-  welcomeMessage: 'Hello Chat',
-  accountId: accountId
-})
-
-const mockValidUpdateBody = (): any => {
+const mockRequest = (accountId: string = faker.random.word()): Omit<ChatModel,'id'|'date'> => {
   return {
     welcomeMessage: faker.random.words(),
-    name: faker.random.word()
+    name: faker.random.word(),
+    accountId: accountId
   }
 }
 
@@ -74,18 +69,24 @@ describe('Chat Routes', () => {
     test('Should return 403 on add chat without accessToken', async () => {
       await request(app)
         .post('/api/chats')
-        .send(mockChat())
+        .send(mockRequest())
         .expect(403)
     })
 
     test('Should return 200 on add chat with valid accessToken', async () => {
       const { accessToken, accountId } = await mockAccessToken()
-      const chat = mockChat(accountId)
-      await request(app)
+      const chat = mockRequest(accountId)
+
+      const response = await request(app)
         .post('/api/chats')
         .set('x-access-token', accessToken)
         .send(chat)
         .expect(200)
+
+      const body: ChatModel = response.body
+      expect(body.id).toBeTruthy()
+      expect(body.welcomeMessage).toBe(chat.welcomeMessage)
+      expect(body.name).toBe(chat.name)
     })
   })
 
@@ -162,7 +163,7 @@ describe('Chat Routes', () => {
       const fakeId = makeObjectId()
       await request(app)
         .put(`/api/chats/${fakeId}`)
-        .send(mockValidUpdateBody())
+        .send(mockRequest())
         .set('x-access-token', accessToken)
         .expect(404)
     })
@@ -216,10 +217,10 @@ describe('Chat Routes', () => {
       const res = await chatCollection.insertOne(mockChatModel(accountId))
       const id = res.ops[0]._id
 
-      const validBody = mockValidUpdateBody()
+      const validBody = mockRequest(accountId)
 
-      const mapExpected = (): any => {
-        return { ...validBody, id: String(id),accountId: String(accountId) ,date: mockedDate.toISOString() }
+      const mapExpected = (body: any): any => {
+        return { ...body, id: String(id),accountId: String(accountId) ,date: mockedDate.toISOString() }
       }
 
       await request(app)
@@ -227,7 +228,7 @@ describe('Chat Routes', () => {
         .send(validBody)
         .set('x-access-token', accessToken)
         .expect(200)
-        .expect(mapExpected())
+        .expect(mapExpected(validBody))
     })
   })
 })
