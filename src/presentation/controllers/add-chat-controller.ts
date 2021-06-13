@@ -1,6 +1,7 @@
 import { Controller, HttpResponse, Validation } from '@/presentation/protocols'
 import { badRequest, serverError, ok } from '@/presentation/helpers'
 import { AddChat } from '@/domain/usecases'
+import { Step } from '@/domain/models'
 
 export class AddChatController implements Controller {
   constructor (
@@ -36,6 +37,7 @@ export namespace AddChatController {
     name: string
     welcomeMessage: string
     accountId: string
+    steps?: Step[]
   }
 
 }

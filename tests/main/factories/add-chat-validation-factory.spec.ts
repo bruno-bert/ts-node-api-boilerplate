@@ -1,4 +1,4 @@
-import { makeAddChatValidation } from '@/main/factories'
+import { makeAddChatValidation , makeFieldValueArrayResolverDecorator } from '@/main/factories'
 import { ValidationComposite, RequiredFieldValidation } from '@/validation/validators'
 import { Validation } from '@/presentation/protocols'
 
@@ -11,6 +11,11 @@ describe('AddChatValidation Factory', () => {
     for (const field of ['name', 'welcomeMessage']) {
       validations.push(new RequiredFieldValidation(field))
     }
+
+    for (const field of ['steps.message']) {
+      validations.push(makeFieldValueArrayResolverDecorator(new RequiredFieldValidation(field),field))
+    }
+
     expect(ValidationComposite).toHaveBeenCalledWith(validations)
   })
 })

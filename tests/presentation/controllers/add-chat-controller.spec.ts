@@ -5,7 +5,39 @@ import { throwError } from '@/tests/domain/mocks'
 
 import MockDate from 'mockdate'
 import faker from 'faker'
+// import { Step, StepType } from '@/domain/models'
 
+/* const mockValidStep = (type: StepType = 'text'): Step => (
+  {
+    stepId: faker.datatype.uuid(),
+    type,
+    message: faker.random.words()
+  }
+)
+
+const mockInvalidStep = (): any => (
+  {
+    stepId: 1,
+    type: 'invalid_type'
+  }
+)
+
+const mockRequestWithStep = (valid: boolean = true, numberOfSteps: number = 1): AddChatController.Request => {
+  const request = mockRequest()
+  let step: Step | any
+  const steps: Step[] = []
+
+  for (let i = 0; i < numberOfSteps; i++) {
+    step = valid ? mockValidStep() : mockInvalidStep()
+    steps.push(step)
+  }
+
+  return {
+    ...request,
+    steps
+  }
+}
+ */
 const mockRequest = (): AddChatController.Request => ({
   welcomeMessage: faker.random.words(),
   name: faker.random.words(),
