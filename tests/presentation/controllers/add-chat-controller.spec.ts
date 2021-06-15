@@ -5,9 +5,9 @@ import { throwError } from '@/tests/domain/mocks'
 
 import MockDate from 'mockdate'
 import faker from 'faker'
-// import { Step, StepType } from '@/domain/models'
+ import { Step, StepType } from '@/domain/models'
 
-/* const mockValidStep = (type: StepType = 'text'): Step => (
+ const mockValidStep = (type: StepType = 'text'): Step => (
   {
     stepId: faker.datatype.uuid(),
     type,
@@ -15,29 +15,7 @@ import faker from 'faker'
   }
 )
 
-const mockInvalidStep = (): any => (
-  {
-    stepId: 1,
-    type: 'invalid_type'
-  }
-)
 
-const mockRequestWithStep = (valid: boolean = true, numberOfSteps: number = 1): AddChatController.Request => {
-  const request = mockRequest()
-  let step: Step | any
-  const steps: Step[] = []
-
-  for (let i = 0; i < numberOfSteps; i++) {
-    step = valid ? mockValidStep() : mockInvalidStep()
-    steps.push(step)
-  }
-
-  return {
-    ...request,
-    steps
-  }
-}
- */
 const mockRequest = (): AddChatController.Request => ({
   welcomeMessage: faker.random.words(),
   name: faker.random.words(),
@@ -104,4 +82,12 @@ describe('AddChat Controller', () => {
     const httpResponse = await sut.handle(request)
     expect(httpResponse).toEqual(ok(addChatSpy.result))
   })
+
+  test('Should return 200 on success with Step', async () => {
+    const { sut,addChatSpy } = makeSut()
+    const request = { ...mockRequest(), steps: [mockValidStep()]}
+    const httpResponse = await sut.handle(request)
+    expect(httpResponse).toEqual(ok(addChatSpy.result))
+  })
+
 })

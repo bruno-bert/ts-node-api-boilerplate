@@ -11,16 +11,15 @@ export class AddChatController implements Controller {
 
   async handle (request: AddChatController.Request): Promise<HttpResponse> {
     try {
-      const error = this.validation.validate(request)
+
+            const error = this.validation.validate(request)
       if (error) {
         return badRequest(error)
       }
 
       const { welcomeMessage, name, accountId } = request
       const chat = {
-        name,
-        welcomeMessage,
-        accountId,
+        ...request,
         date: new Date()
       }
       const result = await this.addChat.add(chat)

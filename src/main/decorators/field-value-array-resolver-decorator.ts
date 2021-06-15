@@ -23,7 +23,9 @@ export class FieldValueArrayResolverDecorator implements Validation {
     const dotted = dot(input)
     const paths: string[] = []
     const path: string = this.fieldValueResolver.pathToResolve
+    
     let noBrackts: string = null
+    let newLineChar = ''
 
     for (const prop of Object.keys(dotted)) {
       noBrackts = prop.replace(/\[(.*?)\]/g, '') /** replaces numbers inside brackets example: [0], [1] */
@@ -35,14 +37,20 @@ export class FieldValueArrayResolverDecorator implements Validation {
     for (const thePath of paths) {
       value = dotted[thePath]
       newInput = { [thePath]: value }
+      
       validationResult = this.validator.validate(newInput)
+      console.log(newInput)
+      console.log(validationResult)
 
       if (validationResult != null) { validationResults.push({ field: thePath, error: validationResult }) }
     }
 
+    
+
     if (validationResults.length > 0) {
       for (const result of validationResults) {
-        message = `${message}\n${result.field}:${result.error} `
+        newLineChar = (message.length)>0 ? '\n' : ''
+        message = `${message}${newLineChar}${result.field}:${result.error} `
       }
       return new Error(message)
     } else { return null }
